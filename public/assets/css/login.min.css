@@ -1,0 +1,26 @@
+body{
+    background-image: url('../img/back.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; 
+    height: 100vh;
+}
+.form-class{
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    background-color: aliceblue; 
+    padding: 15px;
+}
+.btn{
+    margin: auto;
+    min-width: 200px;
+    margin: 5px;
+}
+.form{
+   padding-top: 5%;
+}
+.form-check{
+    text-align: center;
+
+}
