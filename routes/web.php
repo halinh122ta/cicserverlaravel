@@ -25,6 +25,8 @@ Route::post('/register',[UserController::class, 'registerPost'])->name('register
 Route::get('logout',[UserController::class, 'logout'])->name('logout');
 Route::middleware('authUser')->name('home.')->group(function(){
     Route::get('/home', [HomeController::class, 'homePage'])->name('index'); 
+    Route::get('/info', [UserController::class, 'getInfoUser'])->name('getInfoUser'); 
+    Route::get('/edit', [UserController::class, 'updateInfoUser'])->name('updateInfoUser'); 
 });
 Route::middleware('authUser')->name('person.')->group(function(){
     Route::get('/person', [BankController::class, 'person'])->name('index'); 

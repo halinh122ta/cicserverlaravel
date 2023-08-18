@@ -8,6 +8,8 @@ use App\Models\Setup;
 use App\Models\User;
 use Carbon\Carbon; 
 use App\Models\Limitcoke;
+use App\Models\Historie;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
@@ -17,7 +19,7 @@ class TransactionController extends Controller
         $use = Auth::user();
         $user = User::find($use["id"]);
         $setup = Setup::find(1);
-        $domainFull = "http://api.saletaichinh.com:5005/api/Cic/checkcic/".$input["cccd"];
+        $domainFull = "http://api.saletaichinh.com:5005/api/Vnc24h/check/".$input["cccd"];
         $domainEbanker = "http://api.saletaichinh.com:5001/api/Ebanker/checkma/".$input["cccd"];
         $domainFig = "http://api.saletaichinh.com:5005/api/Fig/checkduplicate/".$input["cccd"];
         $domainCicShb = "http://api.saletaichinh.com:5001/api/CicShb/checkdup/".$input["cccd"];
@@ -48,6 +50,8 @@ class TransactionController extends Controller
                 $user->save();
                 TransactionController::postData($cookies,0);
                 $res = TransactionController::Ebanker($cookies,$domainFull);
+                 //lưu lịch sử pử đây
+                TransactionController::addHistoriesData($user->id,"-".$setup->full,$newbalance,"Kiểm tra ".$input["type"]);
                 return response()->json([
                     'balance' => $user->balance,
                     'Message' => json_decode($res)->Message
@@ -95,6 +99,8 @@ class TransactionController extends Controller
                 goto reloadCokie;
             }
             else{
+                //lưu lịch sử pử đây
+                TransactionController::addHistoriesData($user->id,"-".$setup->odd,$newbalance,"Kiểm tra ".$input["type"]);
                 return response()->json([
                     'balance' => $user->balance,
                     'Message' => $message
@@ -116,6 +122,19 @@ class TransactionController extends Controller
         $user->coke = $cookies;
         $user->save();
         return true;
+    }
+    public function addHistoriesData($id_user,$change,$balance,$content){
+        try {
+            $user = new Historie;
+            $user->id_user = $id_user;
+            $user->balance_change = $change;
+            $user->balance_stay = $balance;
+            $user->content = $content;
+            $user->save();
+            return true;
+        } catch (Exception $th) {
+            //throw $th;
+        }
     }
     public function  test($PHPSESSID) {
         $curl = curl_init();

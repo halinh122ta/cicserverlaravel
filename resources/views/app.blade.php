@@ -57,7 +57,7 @@
               </a>
             </li>
             <li>
-              <a href="./history">
+              <a href="#">
                 <i class="zmdi zmdi-view-dashboard"></i> Cá nhân (<span id="balance">{{ $user->balance }}</span> bit)
               </a>
             </li>

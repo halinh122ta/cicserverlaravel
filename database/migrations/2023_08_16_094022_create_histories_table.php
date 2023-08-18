@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_user');
+            $table->string('balance_change'); //số dư hiện tại
+            $table->string('balance_stay'); //số dư hiện tại
+            $table->string('content'); //nội dung 
+            $table->integer('status')->default(1); //
             $table->timestamps();
         });
     }

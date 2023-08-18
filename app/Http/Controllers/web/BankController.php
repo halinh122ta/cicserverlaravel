@@ -35,17 +35,33 @@ class BankController extends Controller
         {
             $pri = Price::find($_GET['id']);
             $pri->status = $_GET['status'];
+            $person = User::find($pri->id_user);
             if($_GET['status'] == 1){
-                $person = User::find($pri->id_user);
                 // dd($person);
                 $add = $pri->volatility + $person->balance;
                 $person->balance = $add;
                 $person->save();
+                BankController::addHistoriesData($pri->id_user,"+".$pri->volatility,$person->balance,"Nạp tiền +".$pri->volatility);
+            }else{
+                BankController::addHistoriesData($pri->id_user,"0",$person->balance,"Nạp tiền bị từ chối");
             }
             $pri->save();
             return 1;
         }
         return 0;
+    }
+    public function addHistoriesData($id_user,$change,$balance,$content){
+        try {
+            $user = new Historie;
+            $user->id_user = $id_user;
+            $user->balance_change = $change;
+            $user->balance_stay = $balance;
+            $user->content = $content;
+            $user->save();
+            return true;
+        } catch (Exception $th) {
+            //throw $th;
+        }
     }
     function appvora(){
         $user = Auth::user();

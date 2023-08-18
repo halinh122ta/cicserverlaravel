@@ -8,17 +8,13 @@
                 <label for="phonenumber" class="form-label">Phonenumber:</label>
                 <input type="text" class="form-control" id="Phonenumber" placeholder="Phonenumber" name="Phonenumber">
             </div>
-            <label for="name" id="name" class="form-label">Hoàn Nam</label>
-            <input type="text" hidden id="id">
+            <label for="name" id="name" class="form-label"></label>
+            <input type="text" hidden id="id_person">
             <div class="mb-3">
                 <label for="balance" class="form-label">Số dư:</label>
-                <input type="text" class="form-control" id="balance" placeholder="Số dư" name="balance">
+                <input type="text" class="form-control" id="balancechange" placeholder="Số dư" name="balancechange">
             </div>
-            <div class="mb-3">
-                <label for="balance" class="form-label">Biến động( + hoặc - vào số dư):</label>
-                <input type="text" class="form-control" id="balance" placeholder="Biến động( + hoặc - vào số dư)" name="balance">
-            </div>
-            <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+            <button type="submit" class="btn btn-primary edit_user">Chỉnh sửa</button>
         </div>
         <h3>Danh sách chờ<span class="count"></span></h3>
         <table class="table table-bordered border-primary" style="width: 100%;overflow-x: scroll;">
